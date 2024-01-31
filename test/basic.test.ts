@@ -591,7 +591,8 @@ describe('nuxt links', () => {
     await page.close()
   })
 
-  it('expect scroll to top on routes with same component', async () => {
+  // Flaky when run on windows + webpack
+  it.runIf(!isWebpack && !isWindows)('expect scroll to top on routes with same component', async () => {
     // #22402
     const page = await createPage('/big-page-1', {
       viewport: {
