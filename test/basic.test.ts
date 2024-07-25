@@ -827,7 +827,11 @@ describe('nuxt links', () => {
     await page.waitForFunction(path => window.useNuxtApp?.()._route.fullPath === path, '/big-page-1')
     await page.waitForFunction(() => window.scrollY === 0)
     await page.close()
-  })
+  }, 
+  // test is flaky when run in CI (windows + webpack)
+  // retrying is preferable over manually rerunning
+  { retry: isWebpack && isWindows ? 3 : 0 }
+  )
 
   it('expect scroll to top on nested pages', async () => {
     // #20523
